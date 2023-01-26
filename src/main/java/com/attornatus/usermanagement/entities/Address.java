@@ -1,5 +1,7 @@
 package com.attornatus.usermanagement.entities;
 
+import java.util.Objects;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -77,6 +79,10 @@ public class Address {
 		return mainAddress;
 	}
 
+	public Boolean isActive() {
+		return this.mainAddress;
+	}
+
 	public void activeMainAddress() {
 		this.mainAddress = true;
 	}
@@ -85,4 +91,28 @@ public class Address {
 		this.mainAddress = false;
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Address other = (Address) obj;
+		return Objects.equals(id, other.id);
+	}
+
+	@Override
+	public String toString() {
+		return "Address [id=" + id + ", mainAddress=" + mainAddress + ", street=" + street + ", cep=" + cep
+				+ ", number=" + number + ", city=" + city + ", state=" + state + "]";
+	}
+
+	
 }

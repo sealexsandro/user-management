@@ -3,6 +3,7 @@ package com.attornatus.usermanagement.entities;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -20,15 +21,11 @@ import jakarta.validation.constraints.NotNull;
 @Table(name = "users")
 public class User {
 
-	/*
-	 * Uma Pessoa deve ter os seguintes campos: • Nome • Data de nascimento
-	 * •Endereço: o Logradouro o CEP o Número o Cidade
-	 * 
-	 */
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@NotNull(message = "O nome é Obrigatório!")
 	private String name;
 
 	@NotNull(message = "A Data de Nascimento é Obrigatória!")
@@ -73,5 +70,29 @@ public class User {
 	public void addAdress(Address address) {
 		this.addresses.add(address);
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		return Objects.equals(id, other.id);
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", birthDate=" + birthDate + ", addresses=" + addresses + "]";
+	}
+	
+	
 
 }

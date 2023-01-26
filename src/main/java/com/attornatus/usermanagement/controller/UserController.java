@@ -33,7 +33,7 @@ public class UserController {
 		return ResponseEntity.ok().body(userService.findAllUsers());
 	}
 
-	@GetMapping("{userId}")
+	@GetMapping("/{userId}")
 	public ResponseEntity<?> findUserById(@PathVariable Long userId) {
 
 		try {
@@ -49,7 +49,7 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(userService.saveUser(user));
 	}
 
-	@PutMapping("{userId}")
+	@PutMapping("/{userId}")
 	public ResponseEntity<?> updateUser(@PathVariable Long userId, @RequestBody User newUser) {
 
 		try {
@@ -80,11 +80,11 @@ public class UserController {
 		}
 	}
 
-	@PatchMapping("address/{userId}")
-	public ResponseEntity<?> activateMainAddress(@PathVariable Long addressId) {
+	@PatchMapping("/address/{userId}/{addressId}")
+	public ResponseEntity<?> activateMainAddress(@PathVariable Long userId, @PathVariable Long addressId) {
 
 		try {
-			Address address = userService.activateMainAddress(addressId);
+			Address address = userService.activateMainAddress(userId, addressId);
 			return ResponseEntity.status(HttpStatus.ACCEPTED).body(address);
 		} catch (ResourceNotFoundException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
